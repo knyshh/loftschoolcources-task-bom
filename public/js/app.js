@@ -1,6 +1,6 @@
 var table,
     cookies = {};
-
+var cookiesArr = []; // array of the {name,value}
 
 //set cookie
 document.cookie = "SiteCookies=Yes3";
@@ -21,8 +21,15 @@ function createTable(){
     var cookies = getCookie() || console.log('There are no cookies');
     cookies.forEach(setToTable);
 }
-function fillNew(){
-    setToTable(cookies);
+function fillNew(name,value){
+    var row = document.createElement('tr');
+    row.classList.add('row');
+    row.innerHTML = ' \
+      <td id="name">' + name + '</td> \
+      <td id="value">' + value + '</td> \
+       <td id="delete"><button data-namecookie="' + name + '">Delete cookies</button></td> \
+      ';
+    table.appendChild(row);
 }
 //write cookie in row
 function setToTable(cookies) {
@@ -68,7 +75,7 @@ createTable();
 document.body.addEventListener('click', addCookie);
 
 function clearFields(){
-    document.forms[0].nameCookie.value = document.forms[0].valueCookie.value = document.forms[0].expiresDateCookie.value = '';
+    document.forms[0].nameCookie.value = document.forms[0].valueCookie.value = 	document.forms[0].expiresDateCookie.value = '';
 }
 
 function addCookie(e){
@@ -86,16 +93,13 @@ function addCookie(e){
 
     if( btnAdd.getAttribute('id') === 'addCookie' ){
         if(name === "" || value === "" || date === ""  || typeof parseInt(date) != 'number') {
-
             alert('fill all fields');
             return;
         }
         else {
-
             document.cookie = name+'='+value+'; expires='+newDate;
+            fillNew(name,value);
             clearFields();
-            fillNew();
         }
-
     }
 }
