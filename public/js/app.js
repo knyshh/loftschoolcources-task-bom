@@ -64,7 +64,7 @@ document.addEventListener('click', e => {
         if (deleteCookie){
             var date = new Date;
             date.setDate(date.getDate() - 1);
-            document.cookie = "name=; path=/; expires=" + date.toUTCString();
+            document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
             btn.parentNode.parentNode.parentNode.removeChild(btn.parentNode.parentNode);
         }
     }
